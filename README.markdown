@@ -4,6 +4,7 @@ Rugby - A Ruby IRC Bot
 Rugby is an IRC bot in Ruby based on [Cinch](https://github.com/cinchrb/cinch) that provides Google results and memos.
 
 __Installation instructions:__
+
 1. Make sure you have ruby and rubygems installed. You can install the
    dependencies using Bundler (gem install bundler) with a simple
 `bundle install`
