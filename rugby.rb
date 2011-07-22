@@ -15,11 +15,12 @@ end
 
 bot = Cinch::Bot.new do
   configure do |c|
-    c.server = SERVER
-    c.nick = NICK
+    c.server   = SERVER
+    c.nick     = NICK
     c.channels = CHANNELS
 
-    @memos = {}
+    @memos     = {}
+    @autoop    = true
   end
 
   helpers do
@@ -35,12 +36,30 @@ bot = Cinch::Bot.new do
     else
       CGI.unescape_html "#{title} - #{desc} (#{link})"
     end
+
+    def shorten(url)
+      url = open("http://tinyurl.com/api-create.php?url=#{URI.escape(url)}").read
+      url == "Error" ? nil : url
+    rescue OpenURI::HTTPError
+      nil
+    end
+
+  end
+
+  on :join do |m|
+    unless m.user.nick == bot.nick
+      m.channel.op(m.user) if @autoop
+    end
+  end
+
+  on :message, /^!autoop (on|off)$/ do |m, option|
+    @autoop = option == "on"
+    m.reply "Autoop is now #{@autoop ? "enabled" : "disabled" }"
   end
 
   on :message, /^!google (.+)/ do |m, query|
     m.reply google(query)
   end
-
 
   on :message do |m|
     if @memos.has_key?(m.user.nick)
@@ -62,6 +81,18 @@ bot = Cinch::Bot.new do
         @memos[nick] = [memo]
       end
       m.reply "Added memo for #{nick}"
+    end
+  end
+
+  on :message, /^!shorten (.+)/ do |m, url|
+    urls = URI.extract(url, "http")
+
+    unless urls.empty?
+      short_urls = urls.map {|url| shorten(url) }.compact
+
+      unless short_urls.empty?
+        m.reply short_urls.join(", ")
+      end
     end
   end
 end
