@@ -2,6 +2,7 @@ require 'cinch'
 require 'open-uri'
 require 'nokogiri'
 require 'cgi'
+require 'google_image_api'
 
 SERVER = "irc.gibsonbigiron.net"
 CHANNELS = ["#datacenter"]
@@ -44,6 +45,9 @@ bot = Cinch::Bot.new do
       nil
     end
 
+    def image(query)
+      return GoogleImageApi.find(query).images.first['url']
+    end
   end
 
   on :join do |m|
@@ -94,6 +98,10 @@ bot = Cinch::Bot.new do
         m.reply short_urls.join(", ")
       end
     end
+  end
+
+  on :message, /^!imageme (.+)/ do |m, query|
+    m.reply image(query)
   end
 end
 
