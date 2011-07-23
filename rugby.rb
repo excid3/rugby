@@ -103,6 +103,10 @@ bot = Cinch::Bot.new do
   on :message, /^!imageme (.+)/ do |m, query|
     m.reply image(query)
   end
+
+  on :message, /^!helpme/ do |m|
+    m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, and !imageme."
+  end
 end
 
 bot.start
