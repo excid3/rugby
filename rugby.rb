@@ -76,7 +76,7 @@ bot = Cinch::Bot.new do
     if nick == m.user.nick
       m.reply "You can't leave a memo for yourself retard."
     elsif nick == bot.nick
-      m.reply "You can't leave memos for the bot retard."
+      m.reply "What? Did your mom buy you a 'puter for Christmas?"
     else
       memo = Memo.new(m.user.nick, m.channel, message, Time.now)
       if @memos[nick]
