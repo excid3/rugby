@@ -72,6 +72,10 @@ bot = Cinch::Bot.new do
     end
   end
 
+  on :message, /^!nick (.+)$/ do |m, nick|
+    bot.nick = nick
+  end
+
   on :message, /^!tell (.+?) (.+)/ do |m, nick, message|
     if nick == m.user.nick
       m.reply "You can't leave a memo for yourself retard."
