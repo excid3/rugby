@@ -45,8 +45,8 @@ bot = Cinch::Bot.new do
       nil
     end
 
-    def image(query)
-      return GoogleImageApi.find(query).images.first['url']
+    def image(query, options={})
+      return GoogleImageApi.find(query, options).images.first['url']
     end
   end
 
@@ -112,9 +112,13 @@ bot = Cinch::Bot.new do
     m.reply image(query)
   end
 
+  on :message, /^!gifme (.+)/ do |m, query|
+    m.reply image(query, {:as_filetype => "gif"})
+  end
+
   on :message, /^!help$/ do |m|
     #TODO: Generate this dynamically based on the handlers that are setup
-    m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, !topic and !imageme."
+    m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, !topic, !gifme and !imageme."
   end
 
   on :message, /^!epeen$/ do |m|
