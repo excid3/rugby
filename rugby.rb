@@ -76,6 +76,10 @@ bot = Cinch::Bot.new do
     bot.nick = nick
   end
 
+  on :channel, /^!topic (.+)$/ do |m, topic|
+    m.channel.topic=topic
+  end
+
   on :message, /^!tell (.+?) (.+)/ do |m, nick, message|
     if nick == m.user.nick
       m.reply "You can't leave a memo for yourself retard."
@@ -108,8 +112,12 @@ bot = Cinch::Bot.new do
     m.reply image(query)
   end
 
-  on :message, /^!helpme/ do |m|
+  on :message, /^!help$/ do |m|
     m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, and !imageme."
+  end
+
+  on :message, /^!epeen$/ do |m|
+    m.reply "8" + "=" * rand(20) + "D" + "~" * rand(5)
   end
 end
 
