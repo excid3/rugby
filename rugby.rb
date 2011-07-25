@@ -56,12 +56,12 @@ bot = Cinch::Bot.new do
     end
   end
 
-  on :message, /^!autoop (on|off)$/ do |m, option|
+  on :message, /^!autoop (on|off)$/i do |m, option|
     @autoop = option == "on"
     m.reply "Autoop is now #{@autoop ? "enabled" : "disabled" }"
   end
 
-  on :message, /^!google (.+)/ do |m, query|
+  on :message, /^!google (.+)/i do |m, query|
     m.reply google(query)
   end
 
@@ -72,15 +72,15 @@ bot = Cinch::Bot.new do
     end
   end
 
-  on :message, /^!nick (.+)$/ do |m, nick|
+  on :message, /^!nick (.+)$/i do |m, nick|
     bot.nick = nick
   end
 
-  on :channel, /^!topic (.+)$/ do |m, topic|
+  on :channel, /^!topic (.+)$/i do |m, topic|
     m.channel.topic=topic
   end
 
-  on :message, /^!tell (.+?) (.+)/ do |m, nick, message|
+  on :message, /^!tell (.+?) (.+)/i do |m, nick, message|
     if nick == m.user.nick
       m.reply "You can't leave a memo for yourself retard."
     elsif nick == bot.nick
@@ -96,7 +96,7 @@ bot = Cinch::Bot.new do
     end
   end
 
-  on :message, /^!shorten (.+)/ do |m, url|
+  on :message, /^!shorten (.+)/i do |m, url|
     urls = URI.extract(url, "http")
 
     unless urls.empty?
@@ -108,20 +108,20 @@ bot = Cinch::Bot.new do
     end
   end
 
-  on :message, /^!imageme (.+)/ do |m, query|
+  on :message, /^!imageme (.+)/i do |m, query|
     m.reply image(query)
   end
 
-  on :message, /^!gifme (.+)/ do |m, query|
+  on :message, /^!gifme (.+)/i do |m, query|
     m.reply image(query, {:as_filetype => "gif"})
   end
 
-  on :message, /^!help$/ do |m|
+  on :message, /^!help$/i do |m|
     #TODO: Generate this dynamically based on the handlers that are setup
     m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, !topic, !gifme and !imageme."
   end
 
-  on :message, /^!epeen$/ do |m|
+  on :message, /^!epeen$/i do |m|
     m.reply "8" + "=" * rand(20) + "D" + "~" * rand(5)
   end
 end
