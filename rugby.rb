@@ -118,7 +118,11 @@ bot = Cinch::Bot.new do
 
   on :message, /^!help$/i do |m|
     #TODO: Generate this dynamically based on the handlers that are setup
-    m.reply "Glad I'm not as forgetful as you are. We've got !tell, !google, !shorten, !topic, !gifme and !imageme."
+    m.reply "Glad I'm not as forgetful as you are. We've got !nick, !tell, !google, !shorten, !topic, !gifme and !imageme."
+  end
+
+  on :message, /^!no$/i do |m|
+    m.reply "oh...ok :("
   end
 
   on :message, /^!epeen$/i do |m|
