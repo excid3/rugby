@@ -83,7 +83,7 @@ bot = Cinch::Bot.new do
     m.channel.topic=topic
   end
 
-  on :message, /^!tell (.+?) (.+)/i do |m, nick, message|
+  on :message, /^!(?:tell|msg) (.+?) (.+)/i do |m, nick, message|
     if nick == m.user.nick
       m.reply "You can't leave a memo for yourself retard."
     elsif nick == bot.nick

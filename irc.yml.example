@@ -1,4 +1,4 @@
 server: irc.freenode.net
-nick: brobot
+nick: rugby
 channels:
 - '#keryx'
