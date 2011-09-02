@@ -3,10 +3,13 @@ require 'open-uri'
 require 'nokogiri'
 require 'cgi'
 require 'google_image_api'
+require 'yaml'
 
-SERVER = "irc.gibsonbigiron.net"
-CHANNELS = ["#datacenter"]
-NICK = "rugby"
+config = YAML::load(open('irc.yml'))
+p config
+SERVER = config['server']
+CHANNELS = config['channels']
+NICK = config['nick']
 
 class Memo < Struct.new(:nick, :channel, :text, :time)
   def to_s

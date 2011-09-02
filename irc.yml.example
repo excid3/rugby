@@ -1,0 +1,4 @@
+server: irc.freenode.net
+nick: brobot
+channels:
+- '#keryx'

@@ -8,9 +8,13 @@ __Installation instructions:__
 1. Make sure you have ruby and rubygems installed. You can install the
    dependencies using Bundler (gem install bundler) with a simple
 `bundle install`
-2. Edit rugby.rb to configure the server, nick, and channels you want to
+2. Copy irc.yml.example to irc.yml and edit it to configure the server, nick, and channels you want to
    join.
 3. `ruby rugby.rb` to launch!
+
+Make sure you can `require 'net/https'` in an irb session otherwise the
+image search will not work. You can get net/https on Ubuntu by
+installing `libopenssl-ruby`
 
 Contributing
 ------------
