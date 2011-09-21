@@ -23,6 +23,7 @@ bot = Cinch::Bot.new do
     c.nick     = NICK
     c.channels = CHANNELS
 
+    @messages  = {}
     @memos     = {}
     @autoop    = true
   end
@@ -68,11 +69,23 @@ bot = Cinch::Bot.new do
     m.reply google(query)
   end
 
-  on :message do |m|
+  on :message do |m, msg|
     if @memos.has_key?(m.user.nick)
       @memos[m.user.nick].each { |memo| m.user.send memo.to_s }
       @memos.delete(m.user.nick)
     end
+
+    # Append the message to the user
+    @messages[m.user.nick] ||= []
+    @messages[m.user.nick] << m.params.last
+    @messages[m.user.nick] = @messages[m.user.nick][-1000..-1] if @messages[m.user.nick] > 250
+  end
+
+  on :message, /^!fakequote(?: (.+))?$/ do |m, nick|
+    nick ||= @messages.keys.sample
+    user = @messages.keys.sample
+
+    m.reply "< #{nick} > #{@messages[user].sample}"
   end
 
   on :message, /^!nick (.+)$/i do |m, nick|
